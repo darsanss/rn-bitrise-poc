@@ -24,4 +24,4 @@ dependencyResolutionManagement {
 rootProject.name = "MyApp"
 include(":app")
 
-apply(from = file("../node_modules/react-native-gradle-plugin/settings.gradle"))
+// apply(from = file("../node_modules/react-native-gradle-plugin/settings.gradle"))
