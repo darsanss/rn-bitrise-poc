@@ -4,10 +4,15 @@ import BusinessTemplate from './BusinessTemplate';
 import EcommerceTemplate from './EcommerceTemplate';
 import SocialTemplate from './SocialTemplate';
 import PortfolioTemplate from './PortfolioTemplate';
+import DebugTemplate from './DebugTemplate';
 
 const TemplateRouter: React.FC = () => {
   // These values would be replaced by Bitrise during build process
   const templateType = '{{TEMPLATE_TYPE}}';
+  
+  // Debug logging to see what we're getting
+  console.log('TemplateRouter - templateType:', templateType);
+  console.log('TemplateRouter - typeof templateType:', typeof templateType);
   
   // Business template variables
   const appName = '{{APP_NAME}}';
@@ -32,64 +37,81 @@ const TemplateRouter: React.FC = () => {
   const bio = '{{BIO}}';
   const portfolioPrimaryColor = '{{PRIMARY_COLOR}}';
 
-  const renderTemplate = () => {
-    switch (templateType) {
-      case 'business':
-        return (
-          <BusinessTemplate
-            appName={appName}
-            primaryColor={businessPrimaryColor}
-            logoUrl={logoUrl}
-            contactEmail={contactEmail}
-          />
-        );
-      
-      case 'ecommerce':
-        return (
-          <EcommerceTemplate
-            storeName={storeName}
-            themeColor={themeColor}
-            currency={currency}
-            apiBaseUrl={apiBaseUrl}
-          />
-        );
-      
-      case 'social':
-        return (
-          <SocialTemplate
-            communityName={communityName}
-            accentColor={accentColor}
-            welcomeMessage={welcomeMessage}
-          />
-        );
-      
-      case 'portfolio':
-        return (
-          <PortfolioTemplate
-            name={name}
-            profession={profession}
-            bio={bio}
-            primaryColor={portfolioPrimaryColor}
-          />
-        );
-      
-      default:
-        // Fallback UI when template type is not recognized
-        return (
-          <View style={styles.fallbackContainer}>
-            <Text style={styles.fallbackTitle}>Template Not Found</Text>
-            <Text style={styles.fallbackMessage}>
-              The template type "{templateType}" is not supported.
-            </Text>
-            <Text style={styles.fallbackSubtext}>
-              Supported templates: business, ecommerce, social, portfolio
-            </Text>
-          </View>
-        );
-    }
-  };
+  // Check if replacement failed (still contains {{}})
+  const isReplacementFailed = templateType.includes('{{') && templateType.includes('}}');
+  
+  // Use fallback template if replacement failed
+  const actualTemplateType = isReplacementFailed ? 'business' : templateType;
+  
+  console.log('TemplateRouter - isReplacementFailed:', isReplacementFailed);
+  console.log('TemplateRouter - actualTemplateType:', actualTemplateType);
 
-  return renderTemplate();
+  // TEMPORARY: Always show debug template to see what's happening
+  return <DebugTemplate />;
+
+  // Use conditional rendering instead of switch statement
+  // This is more React Native friendly
+  if (actualTemplateType === 'business') {
+    return (
+      <BusinessTemplate
+        appName={appName}
+        primaryColor={businessPrimaryColor}
+        logoUrl={logoUrl}
+        contactEmail={contactEmail}
+      />
+    );
+  }
+  
+  if (actualTemplateType === 'ecommerce') {
+    return (
+      <EcommerceTemplate
+        storeName={storeName}
+        themeColor={themeColor}
+        currency={currency}
+        apiBaseUrl={apiBaseUrl}
+      />
+    );
+  }
+  
+  if (actualTemplateType === 'social') {
+    return (
+      <SocialTemplate
+        communityName={communityName}
+        accentColor={accentColor}
+        welcomeMessage={welcomeMessage}
+      />
+    );
+  }
+  
+  if (actualTemplateType === 'portfolio') {
+    return (
+      <PortfolioTemplate
+        name={name}
+        profession={profession}
+        bio={bio}
+        primaryColor={portfolioPrimaryColor}
+      />
+    );
+  }
+  
+  // Fallback UI when template type is not recognized
+  return (
+    <View style={styles.fallbackContainer}>
+      <Text style={styles.fallbackTitle}>Template Not Found</Text>
+      <Text style={styles.fallbackMessage}>
+        The template type "{actualTemplateType}" is not supported.
+      </Text>
+      <Text style={styles.fallbackSubtext}>
+        Supported templates: business, ecommerce, social, portfolio
+      </Text>
+      <Text style={styles.debugText}>
+        Debug: Original value was "{templateType}"
+      </Text>
+      <Text style={styles.debugText}>
+        Replacement failed: {isReplacementFailed ? 'Yes' : 'No'}
+      </Text>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -117,6 +139,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#999',
     textAlign: 'center',
+  },
+  debugText: {
+    fontSize: 12,
+    color: '#666',
+    textAlign: 'center',
+    marginTop: 8,
+    fontFamily: 'monospace',
   },
 });
 
