@@ -1,20 +1,13 @@
-import { Text, View } from 'react-native';
 import React from 'react';
+import { StatusBar } from 'react-native';
+import TemplateRouter from './components/TemplateRouter';
 
 const App = () => {
-  let text = '{{APP_GREETING}}';
   return (
-    <View
-      style={{
-        margin: 50,
-        backgroundColor: '{{PRIMARY_COLOR}}',
-        height: 50,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <Text style={{ fontSize: 15 }}>{text}</Text>
-    </View>
+    <>
+      <StatusBar barStyle="light-content" backgroundColor="#000" />
+      <TemplateRouter />
+    </>
   );
 };
 
