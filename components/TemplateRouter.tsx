@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import BusinessTemplate from './components/BusinessTemplate';
-import EcommerceTemplate from './components/EcommerceTemplate';
-import SocialTemplate from './components/SocialTemplate';
-import PortfolioTemplate from './components/PortfolioTemplate';
+import BusinessTemplate from './BusinessTemplate';
+import EcommerceTemplate from './EcommerceTemplate';
+import SocialTemplate from './SocialTemplate';
+import PortfolioTemplate from './PortfolioTemplate';
 
 const TemplateRouter: React.FC = () => {
   // These values would be replaced by Bitrise during build process
