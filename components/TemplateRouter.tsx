@@ -4,60 +4,59 @@ import BusinessTemplate from './BusinessTemplate';
 import EcommerceTemplate from './EcommerceTemplate';
 import SocialTemplate from './SocialTemplate';
 import PortfolioTemplate from './PortfolioTemplate';
-import DebugTemplate from './DebugTemplate';
+
+// Simple template configuration
+// This will be replaced by Bitrise during build
+const TEMPLATE_CONFIG = {
+  type: '{{TEMPLATE_TYPE}}',
+  business: {
+    appName: '{{APP_NAME}}',
+    primaryColor: '{{PRIMARY_COLOR}}',
+    logoUrl: '{{LOGO_URL}}',
+    contactEmail: '{{CONTACT_EMAIL}}',
+  },
+  ecommerce: {
+    storeName: '{{STORE_NAME}}',
+    themeColor: '{{THEME_COLOR}}',
+    currency: '{{CURRENCY}}',
+    apiBaseUrl: '{{API_BASE_URL}}',
+  },
+  social: {
+    communityName: '{{COMMUNITY_NAME}}',
+    accentColor: '{{ACCENT_COLOR}}',
+    welcomeMessage: '{{WELCOME_MESSAGE}}',
+  },
+  portfolio: {
+    name: '{{NAME}}',
+    profession: '{{PROFESSION}}',
+    bio: '{{BIO}}',
+    primaryColor: '{{PRIMARY_COLOR}}',
+  },
+};
 
 const TemplateRouter: React.FC = () => {
-  // These values would be replaced by Bitrise during build process
-  const templateType = '{{TEMPLATE_TYPE}}';
+  // Get template type
+  const templateType = TEMPLATE_CONFIG.type;
   
-  // Debug logging to see what we're getting
   console.log('TemplateRouter - templateType:', templateType);
-  console.log('TemplateRouter - typeof templateType:', typeof templateType);
   
-  // Business template variables
-  const appName = '{{APP_NAME}}';
-  const businessPrimaryColor = '{{PRIMARY_COLOR}}';
-  const logoUrl = '{{LOGO_URL}}';
-  const contactEmail = '{{CONTACT_EMAIL}}';
-  
-  // Ecommerce template variables
-  const storeName = '{{STORE_NAME}}';
-  const themeColor = '{{THEME_COLOR}}';
-  const currency = '{{CURRENCY}}';
-  const apiBaseUrl = '{{API_BASE_URL}}';
-  
-  // Social template variables
-  const communityName = '{{COMMUNITY_NAME}}';
-  const accentColor = '{{ACCENT_COLOR}}';
-  const welcomeMessage = '{{WELCOME_MESSAGE}}';
-  
-  // Portfolio template variables
-  const name = '{{NAME}}';
-  const profession = '{{PROFESSION}}';
-  const bio = '{{BIO}}';
-  const portfolioPrimaryColor = '{{PRIMARY_COLOR}}';
-
-  // Check if replacement failed (still contains {{}})
+  // Check if replacement failed
   const isReplacementFailed = templateType.includes('{{') && templateType.includes('}}');
   
-  // Use fallback template if replacement failed
+  // Use fallback if replacement failed
   const actualTemplateType = isReplacementFailed ? 'business' : templateType;
   
   console.log('TemplateRouter - isReplacementFailed:', isReplacementFailed);
   console.log('TemplateRouter - actualTemplateType:', actualTemplateType);
 
-  // TEMPORARY: Always show debug template to see what's happening
-  return <DebugTemplate />;
-
-  // Use conditional rendering instead of switch statement
-  // This is more React Native friendly
+  // Render appropriate template
   if (actualTemplateType === 'business') {
     return (
       <BusinessTemplate
-        appName={appName}
-        primaryColor={businessPrimaryColor}
-        logoUrl={logoUrl}
-        contactEmail={contactEmail}
+        appName={TEMPLATE_CONFIG.business.appName}
+        primaryColor={TEMPLATE_CONFIG.business.primaryColor}
+        logoUrl={TEMPLATE_CONFIG.business.logoUrl}
+        contactEmail={TEMPLATE_CONFIG.business.contactEmail}
       />
     );
   }
@@ -65,10 +64,10 @@ const TemplateRouter: React.FC = () => {
   if (actualTemplateType === 'ecommerce') {
     return (
       <EcommerceTemplate
-        storeName={storeName}
-        themeColor={themeColor}
-        currency={currency}
-        apiBaseUrl={apiBaseUrl}
+        storeName={TEMPLATE_CONFIG.ecommerce.storeName}
+        themeColor={TEMPLATE_CONFIG.ecommerce.themeColor}
+        currency={TEMPLATE_CONFIG.ecommerce.currency}
+        apiBaseUrl={TEMPLATE_CONFIG.ecommerce.apiBaseUrl}
       />
     );
   }
@@ -76,9 +75,9 @@ const TemplateRouter: React.FC = () => {
   if (actualTemplateType === 'social') {
     return (
       <SocialTemplate
-        communityName={communityName}
-        accentColor={accentColor}
-        welcomeMessage={welcomeMessage}
+        communityName={TEMPLATE_CONFIG.social.communityName}
+        accentColor={TEMPLATE_CONFIG.social.accentColor}
+        welcomeMessage={TEMPLATE_CONFIG.social.welcomeMessage}
       />
     );
   }
@@ -86,15 +85,15 @@ const TemplateRouter: React.FC = () => {
   if (actualTemplateType === 'portfolio') {
     return (
       <PortfolioTemplate
-        name={name}
-        profession={profession}
-        bio={bio}
-        primaryColor={portfolioPrimaryColor}
+        name={TEMPLATE_CONFIG.portfolio.name}
+        profession={TEMPLATE_CONFIG.portfolio.profession}
+        bio={TEMPLATE_CONFIG.portfolio.bio}
+        primaryColor={TEMPLATE_CONFIG.portfolio.primaryColor}
       />
     );
   }
   
-  // Fallback UI when template type is not recognized
+  // Fallback UI
   return (
     <View style={styles.fallbackContainer}>
       <Text style={styles.fallbackTitle}>Template Not Found</Text>
