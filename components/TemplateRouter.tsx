@@ -7,7 +7,7 @@ import PortfolioTemplate from './PortfolioTemplate';
 
 // Simple template configuration
 // This will be replaced by Bitrise during build
-console.log('TEMPLATE_TYPE', TEMPLATE_TYPE);
+console.log('TEMPLATE_TYPE', '{{TEMPLATE_TYPE}}');
 
 const TEMPLATE_CONFIG = {
   type: '{{TEMPLATE_TYPE}}',
@@ -37,7 +37,7 @@ const TEMPLATE_CONFIG = {
 };
 
 const TemplateRouter: React.FC = () => {
-  console.log('TEMPLATE_TYPE', TEMPLATE_TYPE);
+  console.log('TEMPLATE_TYPE', '{{TEMPLATE_TYPE}}');
   // Get template type
   const templateType = TEMPLATE_CONFIG.type;
   
